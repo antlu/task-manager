@@ -17,13 +17,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
+  username: <%= ENV['DATABASE_USERNAME'] || nil %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: task_manager_development
+  database: <%= ENV['DATABASE_NAME'] || 'task_manager_development' %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +61,7 @@ development:
 test:
   <<: *default
   database: task_manager_test
+  port: <% (ENV['CI_NAME'] == 'codeship') ? 5433 : 5434 %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,6 +85,8 @@ test:
 #
 production:
   <<: *default
-  database: task_manager_production
-  username: task_manager
-  password: <%= ENV['TASK_MANAGER_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
