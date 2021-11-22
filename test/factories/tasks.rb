@@ -4,7 +4,7 @@ FactoryBot.define do
     description { generate(:string) }
     author { association :manager }
     assignee { association :developer }
-    state { generate(:string) }
+    state { :new_task }
     expired_at { generate(:date) }
   end
 end
