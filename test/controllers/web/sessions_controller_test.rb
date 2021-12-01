@@ -12,7 +12,7 @@ class Web::SessionsControllerTest < ActionController::TestCase
       email: user.email,
       password: user.password
     }
-    post :create, params: { session_from: attrs }
+    post :create, params: { session_form: attrs }
     assert_response :redirect
   end
 
