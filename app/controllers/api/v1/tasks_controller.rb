@@ -22,7 +22,9 @@ class API::V1::TasksController < API::V1::ApplicationController
   end
 
   def update
-
+    task = Task.find(params[:id])
+    task.update(task_params)
+    respond_with(task, serializer: TaskSerializer)
   end
 
   def destroy
