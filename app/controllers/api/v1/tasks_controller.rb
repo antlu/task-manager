@@ -28,7 +28,9 @@ class API::V1::TasksController < API::V1::ApplicationController
   end
 
   def destroy
-
+    task = Task.find(params[:id])
+    task.destroy
+    respond_with(task)
   end
 
   private
