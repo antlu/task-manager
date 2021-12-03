@@ -16,7 +16,9 @@ class API::V1::TasksController < API::V1::ApplicationController
   end
 
   def create
-
+    task = current_user.created_tasks.new(task_params)
+    task.save
+    respond_with(task, serializer: TaskSerializer, location: nil)
   end
 
   def update
@@ -25,5 +27,11 @@ class API::V1::TasksController < API::V1::ApplicationController
 
   def destroy
 
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event)
   end
 end
