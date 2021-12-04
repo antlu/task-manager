@@ -8,7 +8,7 @@ class TaskSerializer < ApplicationSerializer
       {
         event: transition.event,
         from: transition.from,
-        to: transition.to
+        to: transition.to,
       }
     end
   end
