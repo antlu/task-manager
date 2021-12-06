@@ -1,4 +1,4 @@
-class API::V1::ApplicationController < API::ApplicationController
+class Api::V1::ApplicationController < Api::ApplicationController
   RANSACK_DEFAULT_SORT = 'id ASC'
 
   def self.responder

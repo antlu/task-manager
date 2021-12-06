@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class API::V1::TasksControllerTest < ActionController::TestCase
+class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should get show' do
     user = create(:user)
     task = create(:task, author: user)
