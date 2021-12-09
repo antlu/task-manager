@@ -24,7 +24,7 @@
     "prettier/prettier": [ 2 , {
       "singleQuote": true,
       "trailingComma": "all",
-      "printWidth": 128
+      "printWidth": 120
     }],
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -43,6 +43,7 @@
     "react/prop-types": [2, { "ignore": ["classes", "match", "dictionaries", "errors", "history", "children", "location"] }],
     "no-debugger": 1,
     "react/destructuring-assignment": 0,
-    "react/static-property-placement": 0
+    "react/static-property-placement": 0,
+    "max-len": [1, 120]
   }
 }
