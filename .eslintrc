@@ -44,6 +44,7 @@
     "no-debugger": 1,
     "react/destructuring-assignment": 0,
     "react/static-property-placement": 0,
+    "react/function-component-definition": [1, { "namedComponents": "function-declaration" }],
     "max-len": [1, 120]
   }
 }
