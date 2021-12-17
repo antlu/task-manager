@@ -17,6 +17,7 @@ function headers() {
   };
 }
 
+axios.defaults.headers.get = headers();
 axios.defaults.headers.post = headers();
 axios.defaults.headers.put = headers();
 axios.defaults.headers.delete = headers();
@@ -40,7 +41,7 @@ export default {
     return axios
       .get(url, {
         params: decamelize(params),
-        paramSerializer: (parameters) => qs.stringify(parameters, { encode: false }),
+        paramsSerializer: (parameters) => qs.stringify(parameters, { encode: false }),
       })
       .then(camelize);
   },
