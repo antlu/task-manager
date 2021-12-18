@@ -59,12 +59,28 @@ function TaskBoard() {
     });
   };
 
+  const handleCardDragEnd = (task, source, destination) => {
+    const transition = task.transitions.find(({ to }) => destination.toColumnId === to);
+    if (!transition) {
+      return null;
+    }
+
+    return TasksRepository.update(task.id, { ...task, state: transition.to })
+      .then(() => {
+        loadColumnInitial(source.fromColumnId);
+        loadColumnInitial(destination.toColumnId);
+      })
+      .catch((error) => {
+        alert(`Move failed! ${error.message}`);
+      });
+  };
+
   const generateBoard = () => {
     const board = {
       columns: STATES.map(({ key, value }) => ({
         id: key,
         title: value,
-        cards: propOr({}, 'cards', boardCards[key]),
+        cards: propOr([], 'cards', boardCards[key]),
         meta: propOr({}, 'meta', boardCards[key]),
       })),
     };
@@ -83,6 +99,7 @@ function TaskBoard() {
       renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
       renderCard={(card) => <Task task={card} />}
       disableColumnDrag
+      onCardDragEnd={handleCardDragEnd}
     >
       {board}
     </Board>
