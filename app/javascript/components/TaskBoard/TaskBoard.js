@@ -66,7 +66,7 @@ function TaskBoard() {
         const newItems = [...items, ...data.items];
         return {
           ...prevState,
-          [state]: { ...prevState[state], cards: newItems },
+          [state]: { ...prevState[state], cards: newItems, meta: data.meta },
         };
       });
     });
