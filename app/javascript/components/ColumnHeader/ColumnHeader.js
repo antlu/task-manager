@@ -39,6 +39,7 @@ ColumnHeader.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     cards: PropTypes.arrayOf(PropTypes.object),
+    // eslint-disable-next-line react/forbid-prop-types
     meta: PropTypes.object,
   }).isRequired,
   onLoadMore: PropTypes.func.isRequired,

@@ -130,15 +130,14 @@ function TaskBoard() {
     });
 
   const generateBoard = () => {
-    const board = {
+    setBoard({
       columns: STATES.map(({ key, value }) => ({
         id: key,
         title: value,
         cards: propOr([], 'cards', boardCards[key]),
         meta: propOr({}, 'meta', boardCards[key]),
       })),
-    };
-    setBoard(board);
+    });
   };
 
   const loadBoard = () => {
