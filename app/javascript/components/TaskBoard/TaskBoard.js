@@ -5,14 +5,14 @@ import AddIcon from '@material-ui/icons/Add';
 import '@asseinfo/react-kanban/dist/styles.css';
 import { propOr } from 'ramda';
 
-import ColumnHeader from '../ColumnHeader';
-import Task from '../Task';
-import AddPopup from '../AddPopup';
-import TasksRepository from '../../repositories/TasksRepository.js';
+import ColumnHeader from 'components/ColumnHeader';
+import Task from 'components/Task';
+import TaskForm from 'forms/TaskForm.js';
+import AddPopup from 'components/AddPopup';
+import EditPopup from 'components/EditPopup';
+import TasksRepository from 'repositories/TasksRepository.js';
 
 import useStyles from './useStyles.js';
-import TaskForm from '../../forms/TaskForm';
-import EditPopup from '../EditPopup/EditPopup';
 
 const STATES = [
   { key: 'new_task', value: 'New' },

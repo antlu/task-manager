@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 
-import TaskForm from '../../forms/TaskForm.js';
+import TaskForm from 'forms/TaskForm.js';
 
 import useStyles from './useStyles.js';
 
