@@ -13,7 +13,7 @@ export default {
     const permittedKeys = ['id', 'name', 'description'];
     return {
       ...pick(permittedKeys, task),
-      assignedId: propOr(null, 'id', task.assignee),
+      assigneeId: propOr(null, 'id', task.assignee),
       authorId: propOr(null, 'id', task.author),
     };
   },
