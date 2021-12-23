@@ -5,6 +5,7 @@ import { has } from 'ramda';
 import TextField from '@material-ui/core/TextField';
 
 import UserSelect from 'components/UserSelect';
+import TaskPresenter from 'presenters/TaskPresenter.js';
 
 import useStyles from './useStyles';
 
@@ -19,7 +20,7 @@ function Form({ errors, onChange, task }) {
         error={has('name', errors)}
         helperText={errors.name}
         onChange={handleChangeTextField('name')}
-        value={task.name}
+        value={TaskPresenter.name(task)}
         label="Name"
         margin="dense"
         required
@@ -28,7 +29,7 @@ function Form({ errors, onChange, task }) {
         error={has('description', errors)}
         helperText={errors.description}
         onChange={handleChangeTextField('description')}
-        value={task.description}
+        value={TaskPresenter.description(task)}
         label="Description"
         margin="dense"
         required
@@ -38,7 +39,7 @@ function Form({ errors, onChange, task }) {
         error={has('author', errors)}
         helperText={errors.author}
         onChange={handleChangeSelect('author')}
-        value={task.author}
+        value={TaskPresenter.author(task)}
         label="Author"
         isRequired
         isDisabled
@@ -47,7 +48,7 @@ function Form({ errors, onChange, task }) {
         error={has('assignee', errors)}
         helperText={errors.assignee}
         onChange={handleChangeSelect('assignee')}
-        value={task.assignee}
+        value={TaskPresenter.assignee(task)}
         label="Assignee"
         isRequired
         isClearable
@@ -58,12 +59,7 @@ function Form({ errors, onChange, task }) {
 
 Form.propTypes = {
   onChange: PropTypes.func.isRequired,
-  task: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    author: PropTypes.shape(),
-    assignee: PropTypes.shape(),
-  }).isRequired,
+  task: TaskPresenter.shape().isRequired,
   errors: PropTypes.shape({
     name: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.arrayOf(PropTypes.string),

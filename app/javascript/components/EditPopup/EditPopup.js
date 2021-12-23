@@ -17,6 +17,8 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
+import TaskPresenter from 'presenters/TaskPresenter.js';
+
 function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate }) {
   const styles = useStyles();
   const [task, setTask] = useState(null);
@@ -57,7 +59,7 @@ function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
               <CloseIcon />
             </IconButton>
           }
-          title={isLoading ? 'Task is loading' : `Task #${task.id} [${task.name}]`}
+          title={isLoading ? 'Task is loading' : `Task #${TaskPresenter.id(task)} [${TaskPresenter.name(task)}]`}
         />
         <CardContent>
           {isLoading ? (
