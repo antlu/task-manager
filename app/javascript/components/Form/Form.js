@@ -9,7 +9,7 @@ import TaskPresenter from 'presenters/TaskPresenter.js';
 
 import useStyles from './useStyles';
 
-function Form({ errors, onChange, task }) {
+function Form({ errors, onChange, task, selects }) {
   const styles = useStyles();
   const handleChangeTextField = (fieldName) => (event) => onChange({ ...task, [fieldName]: event.target.value });
   const handleChangeSelect = (fieldName) => (user) => onChange({ ...task, [fieldName]: user });
@@ -35,24 +35,18 @@ function Form({ errors, onChange, task }) {
         required
         multiline
       />
-      <UserSelect
-        error={has('author', errors)}
-        helperText={errors.author}
-        onChange={handleChangeSelect('author')}
-        value={TaskPresenter.author(task)}
-        label="Author"
-        isRequired
-        isDisabled
-      />
-      <UserSelect
-        error={has('assignee', errors)}
-        helperText={errors.assignee}
-        onChange={handleChangeSelect('assignee')}
-        value={TaskPresenter.assignee(task)}
-        label="Assignee"
-        isRequired
-        isClearable
-      />
+      {selects.map(({ name, props }) => (
+        <UserSelect
+          key={name}
+          error={has(name, errors)}
+          helperText={errors[name]}
+          onChange={handleChangeSelect(name)}
+          value={TaskPresenter[name](task)}
+          label={`${name[0].toUpperCase()}${name.substring(1)}`}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...props}
+        />
+      ))}
     </form>
   );
 }
@@ -66,10 +60,12 @@ Form.propTypes = {
     author: PropTypes.arrayOf(PropTypes.string),
     assignee: PropTypes.arrayOf(PropTypes.string),
   }),
+  selects: PropTypes.arrayOf(PropTypes.object),
 };
 
 Form.defaultProps = {
   errors: {},
+  selects: [],
 };
 
 export default Form;

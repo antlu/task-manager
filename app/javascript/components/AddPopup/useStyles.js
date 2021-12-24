@@ -17,9 +17,9 @@ const useStyles = makeStyles({
     justifyContent: 'right',
   },
 
-  form: {
+  loader: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 

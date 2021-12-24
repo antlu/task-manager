@@ -4,7 +4,6 @@ import { isNil } from 'ramda';
 
 import Form from '../Form';
 
-import useStyles from './useStyles.js';
 import {
   Button,
   Card,
@@ -18,6 +17,8 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 
 import TaskPresenter from 'presenters/TaskPresenter.js';
+
+import useStyles from './useStyles.js';
 
 function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate }) {
   const styles = useStyles();
@@ -67,7 +68,15 @@ function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
               <CircularProgress />
             </div>
           ) : (
-            <Form errors={errors} onChange={setTask} task={task} />
+            <Form
+              errors={errors}
+              onChange={setTask}
+              task={task}
+              selects={[
+                { name: 'author', props: { isDisabled: true } },
+                { name: 'assignee', props: { isClearable: true } },
+              ]}
+            />
           )}
         </CardContent>
         <CardActions className={styles.actions}>
