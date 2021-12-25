@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import AsyncSelect from 'react-select/async';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import { FormControl, FormHelperText, InputLabel } from '@material-ui/core';
 
 import UsersRepository from 'repositories/UsersRepository.js';
@@ -13,16 +13,25 @@ function UserSelect({ error, label, isClearable, isDisabled, isRequired, onChang
   const styles = useStyles();
   const [isFocused, setFocus] = useState(false);
 
-  const handleLoadOptions = (inputValue) =>
+  const handleLoadOptions = (inputValue, loadedOptions, { currentPage }) =>
     UsersRepository.index({
-      q: { firstNameOrLastNameCont: inputValue },
-    }).then(({ data }) => data.items);
+      q: {
+        firstNameOrLastNameCont: inputValue,
+        s: 'first_name asc',
+      },
+      page: currentPage,
+    }).then(({ data: { items, meta } }) => ({
+      options: items,
+      hasMore: meta.currentPage < meta.totalPages,
+      additional: { ...meta, currentPage: meta.currentPage + 1 },
+    }));
 
   return (
     <FormControl margin="dense" disabled={isDisabled} focused={isFocused} error={error} required={isRequired}>
       <InputLabel shrink>{label}</InputLabel>
       <div className={styles.select}>
-        <AsyncSelect
+        <AsyncPaginate
+          additional={{ currentPage: 1 }}
           cacheOptions
           loadOptions={handleLoadOptions}
           defaultOptions
