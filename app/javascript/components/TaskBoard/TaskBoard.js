@@ -11,6 +11,7 @@ import TaskForm from 'forms/TaskForm.js';
 import AddPopup from 'components/AddPopup';
 import EditPopup from 'components/EditPopup';
 import TasksRepository from 'repositories/TasksRepository.js';
+import TaskPresenter from 'presenters/TaskPresenter.js';
 
 import useStyles from './useStyles.js';
 
@@ -76,12 +77,12 @@ function TaskBoard() {
   };
 
   const handleCardDragEnd = (task, source, destination) => {
-    const transition = task.transitions.find(({ to }) => destination.toColumnId === to);
+    const transition = TaskPresenter.transitions(task).find(({ to }) => destination.toColumnId === to);
     if (!transition) {
       return null;
     }
 
-    return TasksRepository.update(task.id, { ...task, state: transition.to })
+    return TasksRepository.update(TaskPresenter.id(task), { ...task, state: transition.to })
       .then(() => {
         loadColumnInitial(source.fromColumnId);
         loadColumnInitial(destination.toColumnId);
@@ -97,7 +98,7 @@ function TaskBoard() {
 
   const handleOpenEditPopup = (task) => {
     setMode(MODES.EDIT);
-    setOpenTaskId(task.id);
+    setOpenTaskId(TaskPresenter.id(task));
   };
 
   const handleCloseEditPopup = () => {
@@ -108,7 +109,7 @@ function TaskBoard() {
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
-      loadColumnInitial(task.state);
+      loadColumnInitial(TaskPresenter.state(task));
       handleCloseAddPopup();
     });
   };
@@ -117,15 +118,15 @@ function TaskBoard() {
 
   const handleCardUpdate = (task) => {
     const attributes = TaskForm.attributesToSubmit(task);
-    return TasksRepository.update(task.id, attributes).then(() => {
-      loadColumnInitial(task.state);
+    return TasksRepository.update(TaskPresenter.id(task), attributes).then(() => {
+      loadColumnInitial(TaskPresenter.state(task));
       handleCloseEditPopup();
     });
   };
 
   const handleCardDestroy = (task) =>
-    TasksRepository.destroy(task.id).then(() => {
-      loadColumnInitial(task.state);
+    TasksRepository.destroy(TaskPresenter.id(task)).then(() => {
+      loadColumnInitial(TaskPresenter.state(task));
       handleCloseEditPopup();
     });
 

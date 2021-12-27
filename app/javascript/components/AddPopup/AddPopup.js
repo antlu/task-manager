@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { has } from 'ramda';
+import { isNil } from 'ramda';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+import { CardActions, CardContent, CardHeader, CircularProgress, IconButton, Modal } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
 
+import Form from '../Form';
 import TaskForm from 'forms/TaskForm.js';
 
 import useStyles from './useStyles.js';
 
 function AddPopup({ onClose, onCreateCard }) {
   const styles = useStyles();
-  const [task, changeTask] = useState(TaskForm.defaultAttributes());
+  const [task, setTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -34,7 +30,7 @@ function AddPopup({ onClose, onCreateCard }) {
     });
   };
 
-  const handleChangeTextField = (fieldName) => (event) => changeTask({ ...task, [fieldName]: event.target.value });
+  const isLoading = isNil(task);
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
@@ -48,26 +44,18 @@ function AddPopup({ onClose, onCreateCard }) {
           title="Add New Task"
         />
         <CardContent>
-          <div className={styles.form}>
-            <TextField
-              error={has('name', errors)}
-              helperText={errors.name}
-              onChange={handleChangeTextField('name')}
-              value={task.name}
-              label="Name"
-              required
-              margin="dense"
+          {isLoading ? (
+            <div className={styles.loader}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <Form
+              errors={errors}
+              onChange={setTask}
+              task={task}
+              selects={[{ name: 'assignee', props: { isClearable: true } }]}
             />
-            <TextField
-              error={has('description', errors)}
-              helperText={errors.description}
-              onChange={handleChangeTextField('description')}
-              value={task.description}
-              label="Description"
-              required
-              margin="dense"
-            />
-          </div>
+          )}
         </CardContent>
         <CardActions className={styles.actions}>
           <Button disabled={isSaving} onClick={handleCardCreate} variant="contained" size="small" color="primary">
