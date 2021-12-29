@@ -12,7 +12,7 @@ import TaskForm from 'forms/TaskForm.js';
 
 import useStyles from './useStyles.js';
 
-function AddPopup({ onClose, onCreateCard }) {
+function AddPopup({ onClose, onCardCreate }) {
   const styles = useStyles();
   const [task, setTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
@@ -21,7 +21,7 @@ function AddPopup({ onClose, onCreateCard }) {
   const handleCardCreate = () => {
     setSaving(true);
 
-    onCreateCard(task).catch((error) => {
+    onCardCreate(task).catch((error) => {
       setSaving(false);
       setErrors(error || {});
       if (error instanceof Error) {
@@ -69,7 +69,7 @@ function AddPopup({ onClose, onCreateCard }) {
 
 AddPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onCreateCard: PropTypes.func.isRequired,
+  onCardCreate: PropTypes.func.isRequired,
 };
 
 export default AddPopup;
