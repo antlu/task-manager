@@ -2,6 +2,8 @@ services:
 
   ci:
     build: .
+    volumes:
+      - .:/task_manager
     depends_on:
       - db
     environment:
