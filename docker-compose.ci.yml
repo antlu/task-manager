@@ -10,9 +10,9 @@ services:
       - DATABASE_HOST=db
       - DATABASE_USERNAME=postgres
     command: >
-      bundle exec rails webpacker:install
+      bash -c "bundle exec rails webpacker:install
       && bundle exec rails db:create db:migrate
-      && bundle exec rails test
+      && bundle exec rails test"
 
   db:
     image: postgres:12-alpine
