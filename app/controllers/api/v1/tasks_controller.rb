@@ -20,6 +20,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   def update
     task = Task.find(params[:id])
     task.update(task_params)
+    UserMailer.with({ user: task.author, task: task }).task_edited.deliver_now
     respond_with(task, serializer: TaskSerializer)
   end
 
