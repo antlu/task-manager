@@ -27,6 +27,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   def destroy
     task = Task.find(params[:id])
     task.destroy
+    UserMailer.with({ user: task.author, task: task }).task_deleted.deliver_now
     respond_with(task)
   end
 

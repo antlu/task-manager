@@ -48,7 +48,9 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should delete destroy' do
     user = create(:user)
     task = create(:task, author: user)
-    delete :destroy, params: { id: task.id, format: :json }
+    assert_emails 1 do
+      delete :destroy, params: { id: task.id, format: :json }
+    end
     assert_response :success
 
     assert !Task.where(id: task.id).exists?
