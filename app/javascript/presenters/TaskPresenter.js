@@ -14,3 +14,13 @@ export default new PropTypesPresenter(
   },
   {},
 );
+
+export const STATES = [
+  { key: 'new_task', value: 'New' },
+  { key: 'in_development', value: 'In development' },
+  { key: 'in_qa', value: 'In testing' },
+  { key: 'in_code_review', value: 'In review' },
+  { key: 'ready_for_release', value: 'Ready for release' },
+  { key: 'released', value: 'Released' },
+  { key: 'archived', value: 'Archived' },
+];
