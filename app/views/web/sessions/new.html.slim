@@ -1,7 +1,12 @@
-h4 Log In
+h4 Log in
+
+- flash.each do |type, msg|
+  = msg
+
 = simple_form_for @session, url: session_path do |f|
   p
     = f.input :email
     = f.input :password
+    = link_to "Forgotten password?", new_password_reset_path, class: 'mdl-navigation__link'
   p
     = f.button :submit, "Sign in"
