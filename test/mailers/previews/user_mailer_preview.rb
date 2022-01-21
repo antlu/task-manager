@@ -19,6 +19,9 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def password_reset
-    UserMailer.password_reset(User.first)
+    user = User.first
+    user.password_reset_token = 'test'
+
+    UserMailer.password_reset(user)
   end
 end

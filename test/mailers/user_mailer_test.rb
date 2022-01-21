@@ -48,4 +48,18 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "Task Deleted", email.subject
     assert email.body.to_s.include?("Task #{task.id} was deleted")
   end
+
+  test 'password reset' do
+    user = create(:user, password_reset_token: 'test')
+    email = UserMailer.password_reset(user)
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    assert_equal ['from@example.com'], email.from
+    assert_equal [user.email], email.to
+    assert_equal "Password Reset", email.subject
+    assert email.body.to_s.include?("http://localhost:3000/password_resets/#{user.password_reset_token}/edit")
+  end
 end
