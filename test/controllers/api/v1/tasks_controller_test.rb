@@ -18,7 +18,9 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     sign_in author
     assignee = create(:user)
     task_attributes = attributes_for(:task).merge({ assignee_id: assignee.id })
-    post :create, params: { task: task_attributes, format: :json }
+    assert_emails 1 do
+      post :create, params: { task: task_attributes, format: :json }
+    end
     assert_response :created
 
     data = JSON.parse(response.body)
@@ -34,7 +36,9 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     task_attributes = attributes_for(:task).
       merge({ author_id: author.id, assignee_id: assignee.id }).
       stringify_keys
-    patch :update, params: { id: task.id, format: :json, task: task_attributes }
+    assert_emails 1 do
+      patch :update, params: { id: task.id, format: :json, task: task_attributes }
+    end
     assert_response :success
 
     task.reload
@@ -44,7 +48,9 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should delete destroy' do
     user = create(:user)
     task = create(:task, author: user)
-    delete :destroy, params: { id: task.id, format: :json }
+    assert_emails 1 do
+      delete :destroy, params: { id: task.id, format: :json }
+    end
     assert_response :success
 
     assert !Task.where(id: task.id).exists?

@@ -1,0 +1,11 @@
+h4 Reset password
+
+- @user.errors.full_messages.each do |msg|
+  = msg
+
+= simple_form_for :user, method: 'put', url: password_reset_path(params[:id]) do |f|
+  p
+    = f.input :password
+    = f.input :password_confirmation
+  p
+    = f.button :submit, "OK"
